@@ -8,10 +8,10 @@ using namespace std;
 
 class SLLString {
     private:
-        Node *head; // store the head of the LinkedList
-    
+        Node *head = nullptr; // store the head of the LinkedList
+
     public:
-        SLLString(); // default constructor
+        SLLString() = default; // default constructor
 
         SLLString(const string& other); // constructor that takes a string
         SLLString(const SLLString& other); // copy constructor
@@ -26,6 +26,11 @@ class SLLString {
         // substring in the current string. Returns -1 if not found
         void erase(char c); //erase all occurrences of character c from the current string
         friend ostream& operator<<(ostream&, SLLString&); // support cout
+
+        // other methods
+        void print() const;
+        bool isEmpty() const;
+        void destroy();
 };
 
 #endif
