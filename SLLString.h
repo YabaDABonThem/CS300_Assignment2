@@ -25,10 +25,9 @@ class SLLString {
         int findSubstring(const SLLString& substring); // find the index of the first occurrence of
         // substring in the current string. Returns -1 if not found
         void erase(char c); //erase all occurrences of character c from the current string
-        friend ostream& operator<<(ostream&, SLLString&); // support cout
+        friend ostream& operator<<(ostream&, const SLLString&); // support cout
 
         // other methods
-        void print() const;
         bool isEmpty() const;
         void destroy();
 };

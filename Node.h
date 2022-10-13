@@ -5,11 +5,8 @@ class Node
 {
 	public:
 		char data;
-		Node *next = NULL;
-		Node(char data) : data(data) {}
-		Node() {
-			
-		}
+		Node *next;
+		Node(char data) : data(data), next(NULL) {}
 };
 
 #endif
