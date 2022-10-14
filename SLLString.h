@@ -22,12 +22,14 @@ class SLLString {
         
         int length() const; // get length of this string
         char& operator[](const int n); // get character at index n
-        int findSubstring(const SLLString& substring); // find the index of the first occurrence of
+        int findSubstring(const SLLString& substring) const; // find the index of the first occurrence of
         // substring in the current string. Returns -1 if not found
         void erase(char c); //erase all occurrences of character c from the current string
         friend ostream& operator<<(ostream&, const SLLString&); // support cout
 
-        // other methods
+    private:
+        // other helper methods
+        bool isPrefix(const Node *stringPtr, const SLLString& substring) const;
         bool isEmpty() const;
         void destroy();
 };

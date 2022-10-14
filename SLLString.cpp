@@ -83,26 +83,65 @@ char& SLLString::operator[](const int n) {
     return ptr->data; // return the data at index n-1
 }
 
-int SLLString::findSubstring(const SLLString& substring) {
+int SLLString::findSubstring(const SLLString& substring) const {
     // return the index of the first occurence of the substring
     // this is a common sliding window problem
     int startMatch = 0; // index where they began matching
-    int numMatchingChars = 0; // keep track of the current matching char count
     Node *ptr = head;
-    Node *substringPtr = substring.head;
     
     while (ptr) { // loop through the SLL (we need to track the)
-        if (numMatchingChars == substring.length()) { // if we found a match
-            return startMatch;
+        if (isPrefix(ptr, substring)) {
+            return startMatch; // if they match, return the index where they match
         }
-        if (ptr->data == substringPtr->data) {
-            ++numMatchingChars; // increase the num of matching characters
-        } else { // if they don't match, increment the startMatch by the num of characters that match
-            startMatch += numMatchingChars; // makes startMatch go to the current index
-            numMatchingChars = 0;
-        }
+        ++startMatch;
+        ptr = ptr->next;
     }
-    return -1; // if we didn't frind the substring
+    return -1; // if we didn't find the substring
+}
+
+bool SLLString::isPrefix(const Node *stringPtr, const SLLString& substring) const {
+    // helper method to see if substring is the prefix of our SSLString
+    Node *substringPtr = substring.head;
+
+    while (substringPtr) { // go through to length of the substring to make sure every char matches
+        if (stringPtr->data != substringPtr->data) {
+            return false;
+        }
+        stringPtr = stringPtr->next;
+        substringPtr = substringPtr->next;
+    }
+    return true;
+}
+
+void SLLString::erase(char c) {
+    if (!head) return; // edge case: head is null
+    // iterate through the SSL and remove all instances of the character
+    // You need to be able to "patch up" the holes in the SLL
+    Node *currPtr = head;
+    Node *prevPtr = NULL; // set this before head moves
+    // NOTE: do we need to keep track of the Node we're deleting?
+    while(currPtr) {
+        if (currPtr->data != c) { // normal case (character doesn't get deleted))
+            prevPtr = currPtr;
+            currPtr = currPtr->next;
+            continue;
+        }
+        // case: character needs to get deleted
+        // edge case: the first item needs to be deleted
+        if (currPtr == head) {
+            // prev pointer is still null
+            head = head->next; // there is a new head
+            delete currPtr;
+            currPtr = head;
+        } else { // prev pointer is no longer null due to the first if statement
+            prevPtr->next = currPtr->next; // set next to prev to next of curr
+            delete currPtr; // delete the Node and make it point to the one after prevPtr
+            currPtr = prevPtr->next; 
+        }
+        
+
+
+    }
 }
 
 int SLLString::length() const {
