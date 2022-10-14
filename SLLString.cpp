@@ -86,11 +86,21 @@ char& SLLString::operator[](const int n) {
 int SLLString::findSubstring(const SLLString& substring) {
     // return the index of the first occurence of the substring
     // this is a common sliding window problem
+    int startMatch = 0; // index where they began matching
     int numMatchingChars = 0; // keep track of the current matching char count
     Node *ptr = head;
     Node *substringPtr = substring.head;
-    while (ptr) { // loop through the SLL
-        if (numMatchingChars == substring.length())
+    
+    while (ptr) { // loop through the SLL (we need to track the)
+        if (numMatchingChars == substring.length()) { // if we found a match
+            return startMatch;
+        }
+        if (ptr->data == substringPtr->data) {
+            ++numMatchingChars; // increase the num of matching characters
+        } else { // if they don't match, increment the startMatch by the num of characters that match
+            startMatch += numMatchingChars; // makes startMatch go to the current index
+            numMatchingChars = 0;
+        }
     }
     return -1; // if we didn't frind the substring
 }
