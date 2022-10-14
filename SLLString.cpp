@@ -5,11 +5,11 @@
 
 SLLString::SLLString(const string& other) {
     // fenceposting is dum asf
-    head = new Node(other[0]); // prevents head from being null;
+    head->data = other[0]; // prevents head from being null;
     Node *ptr = head;
 
     for(int i = 1; i < other.size(); ++i, ptr = ptr->next) {
-        ptr->next = new Node(other[i]);
+        ptr->next->data = other[i];
     }
 }
 
@@ -35,12 +35,12 @@ SLLString& SLLString::operator=(const SLLString& other) {
             return *this; // we already destroyed this
         }
         const Node *otherNode = other.head;
-        head = new Node(otherNode->data);
+        head->data = otherNode->data;
         Node *thisPtr = head;
 
         while (otherNode->next) { // loop through all the nodes in other
             otherNode = otherNode->next;
-            thisPtr->next = new Node(otherNode->data); // set our nodes equal to the value of other's nodes
+            thisPtr->next->data = otherNode->data; // set our nodes equal to the value of other's nodes
             thisPtr = thisPtr->next;
         }
 
@@ -64,7 +64,7 @@ SLLString& SLLString::operator+= (const SLLString& other) {
     // this decreases the runtime to O(m+n), which is way faster then having a private method to add.
     while(otherPtr) {
         // _ASSERT(!thisPtr->next);
-        thisPtr->next = new Node(otherPtr->data);
+        thisPtr->next->data = otherPtr->data;
         otherPtr = otherPtr->next;
         thisPtr = thisPtr->next;
     }
