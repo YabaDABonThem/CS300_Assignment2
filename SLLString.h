@@ -20,7 +20,7 @@ class SLLString {
         SLLString& operator=(const SLLString& other); // assignment constructor
         SLLString& operator+= (const SLLString& other); // concatenation
         
-        int length(); // get length of this string
+        int length const(); // get length of this string
         char& operator[](const int n); // get character at index n
         int findSubstring(const SLLString& substring); // find the index of the first occurrence of
         // substring in the current string. Returns -1 if not found

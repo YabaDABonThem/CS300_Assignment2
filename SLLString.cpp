@@ -1,7 +1,7 @@
 #include "SLLString.h"
 #include <iostream>
 
-// using namespace std;
+// using namespace std; // debug purposes
 
 SLLString::SLLString(const string& other) {
     // fenceposting is dum asf
@@ -67,14 +67,35 @@ SLLString& SLLString::operator+= (const SLLString& other) {
     return *this;
 }
 
-// char& SLLString::operator[](const int n) {
-//     if (n > length()-1) {
-//         std::cout << "Index out of bound" << std::endl;
-//         // EXIT
-//     }
-// }
+char& SLLString::operator[](const int n) {
 
-int SLLString::length() {
+    if (n < 0 || n >= length()) { // If given invalid argument
+        std::cout << "Index out of bounds" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    Node *ptr = head;
+    
+    for (int i = 0; i < n; ++i) {
+        ptr = ptr->next; // loop through the SLL n amount of times
+    }
+    
+    return ptr->data; // return the data at index n-1
+}
+
+int SLLString::findSubstring(const SLLString& substring) {
+    // return the index of the first occurence of the substring
+    // this is a common sliding window problem
+    int numMatchingChars = 0; // keep track of the current matching char count
+    Node *ptr = head;
+    Node *substringPtr = substring.head;
+    while (ptr) { // loop through the SLL
+        if (numMatchingChars == substring.length())
+    }
+    return -1; // if we didn't frind the substring
+}
+
+int SLLString::length() const {
     // loop through all the nodes until you get the length
     if (isEmpty()) { // if it's Empty return 0
         return 0;
