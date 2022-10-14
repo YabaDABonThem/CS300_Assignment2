@@ -5,10 +5,12 @@
 
 SLLString::SLLString(const string& other) {
     // fenceposting is dum asf
-    head->data = other[0]; // prevents head from being null;
+    head = new Node(); // prevents head from being null;
+    head->data = other[0];
     Node *ptr = head;
 
     for(int i = 1; i < other.size(); ++i, ptr = ptr->next) {
+        ptr->next = new Node();
         ptr->next->data = other[i];
     }
 }
@@ -35,12 +37,14 @@ SLLString& SLLString::operator=(const SLLString& other) {
             return *this; // we already destroyed this
         }
         const Node *otherNode = other.head;
+        head = new Node();
         head->data = otherNode->data;
         Node *thisPtr = head;
 
         while (otherNode->next) { // loop through all the nodes in other
             otherNode = otherNode->next;
-            thisPtr->next->data = otherNode->data; // set our nodes equal to the value of other's nodes
+            thisPtr->next = new Node(); // set our nodes equal to the value of other's nodes
+            thisPtr->next->data = otherNode->data;
             thisPtr = thisPtr->next;
         }
 
@@ -64,6 +68,7 @@ SLLString& SLLString::operator+= (const SLLString& other) {
     // this decreases the runtime to O(m+n), which is way faster then having a private method to add.
     while(otherPtr) {
         // _ASSERT(!thisPtr->next);
+        thisPtr->next = new Node();
         thisPtr->next->data = otherPtr->data;
         otherPtr = otherPtr->next;
         thisPtr = thisPtr->next;
@@ -102,6 +107,10 @@ int SLLString::findSubstring(const SLLString& substring) const {
         ptr = ptr->next;
     }
     return -1; // if we didn't find the substring
+}
+
+int SLLString::findSubstring(const std::string& substring) const {
+    return findSubstring(SLLString(substring));
 }
 
 bool SLLString::isPrefix(const Node *stringPtr, const SLLString& substring) const {

@@ -18,13 +18,13 @@ int main()
     newStr[6] = 'W';
     cout << newStr << endl;
 
-    int loc = newStr.findSubstring(SLLString("World"));
+    int loc = newStr.findSubstring("World");
     cout << loc << endl; // 6
 
     SLLString hi("hello");
-    int loc2 = hi.findSubstring(SLLString("lo"));
+    int loc2 = hi.findSubstring("lo");
     cout << loc2 << endl; // 3
-    loc2 = hi.findSubstring(SLLString("lol"));
+    loc2 = hi.findSubstring("lol");
     cout << loc2 << endl; // -1
 
     newStr.erase('l');      //erase the letter l.
