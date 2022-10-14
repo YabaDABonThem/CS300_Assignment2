@@ -15,20 +15,25 @@ int main()
 
     cout << newStr << endl;
 
-    // newStr[6] = 'W';
+    newStr[6] = 'W';
+    cout << newStr << endl;
 
-    // int loc = newStr.findSubstring("World");
-    // cout << loc << endl; // 6
+    int loc = newStr.findSubstring(SLLString("World"));
+    cout << loc << endl; // 6
 
-    // SLLString hi("hello");
-    // int loc2 = hi.findSubstring("lo");
-    // cout << loc2 << endl;
+    SLLString hi("hello");
+    int loc2 = hi.findSubstring(SLLString("lo"));
+    cout << loc2 << endl; // 3
+    loc2 = hi.findSubstring(SLLString("lol"));
+    cout << loc2 << endl; // -1
 
-    // newStr.erase('l');      //erase the letter l.
-    // cout << newStr << endl; // Heo Word! CS@BC
+    newStr.erase('l');      //erase the letter l.
+    cout << newStr << endl; // Heo Word! CS@BC
 
-    // newStr.erase('C');
-    // cout << newStr << endl; // Heo Word! S@B
+    newStr.erase('C');
+    cout << newStr << endl; // Heo Word! S@B
+
+    SLLString().erase('c');
 
     return 0;
 }

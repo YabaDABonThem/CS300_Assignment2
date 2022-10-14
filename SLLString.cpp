@@ -19,7 +19,7 @@ SLLString::SLLString(const SLLString& other) {
 }
 
 SLLString::~SLLString() {
-    void destroy(); // when we destroy we need to keep track of the previous head
+    destroy(); // when we destroy we need to keep track of the previous head
     // and delete it
 }
 
@@ -28,7 +28,7 @@ SLLString& SLLString::operator=(const SLLString& other) {
     // check if it's not already the same thing
     if (this != &other) { // check if the pointers point to the same thing
         // If we already have some items, get rid of them via the destructor
-        if (!isEmpty()) destroy();
+        destroy();
 
         // set the first item equal to the head of the other.
         if (!other.head) {
@@ -49,16 +49,21 @@ SLLString& SLLString::operator=(const SLLString& other) {
 }
 
 SLLString& SLLString::operator+= (const SLLString& other) {
+    if (!head) {
+        *this = other;
+        return *this;
+    }
     // combine the two, move the pointer to the enter of this
     // and set the next to the beginning of other. 
     Node *thisPtr = head;
     Node *otherPtr = other.head;
-    // Move thisPtr to the end of our SLLString
-    while (thisPtr) thisPtr = thisPtr->next;
+    // Move thisPtr to the last node of our SLLString
+    while (thisPtr->next) thisPtr = thisPtr->next;
 
     // We now deep copy the values from other to this
     // this decreases the runtime to O(m+n), which is way faster then having a private method to add.
     while(otherPtr) {
+        // _ASSERT(!thisPtr->next);
         thisPtr->next = new Node(otherPtr->data);
         otherPtr = otherPtr->next;
         thisPtr = thisPtr->next;
@@ -104,7 +109,8 @@ bool SLLString::isPrefix(const Node *stringPtr, const SLLString& substring) cons
     Node *substringPtr = substring.head;
 
     while (substringPtr) { // go through to length of the substring to make sure every char matches
-        if (stringPtr->data != substringPtr->data) {
+        // edge case where the substring is longer than the string itself
+        if (!stringPtr || stringPtr->data != substringPtr->data) {
             return false;
         }
         stringPtr = stringPtr->next;
@@ -146,7 +152,7 @@ void SLLString::erase(char c) {
 
 int SLLString::length() const {
     // loop through all the nodes until you get the length
-    if (isEmpty()) { // if it's Empty return 0
+    if (!head) { // if it's Empty return 0
         return 0;
     }
 
@@ -163,7 +169,7 @@ int SLLString::length() const {
 
 ostream& operator<<(ostream& os, const SLLString& s) {
     // std::cout << "printed" << endl;
-    if (s.isEmpty()) {
+    if (!s.head) {
         return os;
     }
     Node *n = s.head;
@@ -175,16 +181,11 @@ ostream& operator<<(ostream& os, const SLLString& s) {
     return os;
 }
 
-bool SLLString::isEmpty() const{
-    return !head;
-}
-
 void SLLString::destroy(){
-    Node *n = head;
-    while(n){
-        n = n->next;
+    while(head){
+        Node *n = head;
+        head = head->next;
         delete n;
-        head = n;
     }
 }
 
