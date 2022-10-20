@@ -3,6 +3,29 @@
 
 using namespace std;
 
+void TestAssignment() {
+    cout << "assign instance 2 to instance 1" << endl;
+	SLLString mystring1("");
+	SLLString mystring2("pie");
+	mystring1 += mystring2;
+
+	cout << "string 1: " << mystring1 << endl;
+}
+
+void TestAssignment2() {
+    cout << "assign instance 2 to instance 1" << endl;
+	SLLString mystring1("apple");
+	SLLString mystring2("");
+	mystring1 += mystring2;
+
+	cout << "string 1: " << mystring1 << endl;
+}
+
+void TestCopyConstructor() {
+    SLLString mystring1("pie");
+	SLLString mystring2(mystring1);
+}
+
 int main()
 {
     SLLString str("Hello world!");
@@ -34,6 +57,9 @@ int main()
     cout << newStr << endl; // Heo Word! S@B
 
     SLLString().erase('c');
-
+    
+    TestAssignment();
+    TestAssignment2();
+    TestCopyConstructor();
     return 0;
 }

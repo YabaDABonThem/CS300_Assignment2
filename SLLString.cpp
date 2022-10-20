@@ -5,19 +5,17 @@
 
 SLLString::SLLString(const string& other) {
     // fenceposting is dum asf
-    head = new Node(); // prevents head from being null;
-    head->data = other[0];
-    Node *ptr = head;
+    Node * *ptr = &head;
 
-    for(int i = 1; i < other.size(); ++i, ptr = ptr->next) {
-        ptr->next = new Node();
-        ptr->next->data = other[i];
+    for(int i = 0; i < other.size(); ++i) {
+        *ptr = new Node();
+        (*ptr)->data = other[i];
+        ptr = &(*ptr)->next;
     }
 }
 
 SLLString::SLLString(const SLLString& other) {
-    // shallow copy
-    head = other.head;
+    *this = other;
 }
 
 SLLString::~SLLString() {
@@ -77,7 +75,7 @@ SLLString& SLLString::operator+= (const SLLString& other) {
     return *this;
 }
 
-char& SLLString::operator[](const int n) {
+char& SLLString::operator[](const int n) const {
 
     if (n < 0 || n >= length()) { // If given invalid argument
         std::cout << "Index out of bounds" << std::endl;
@@ -183,18 +181,18 @@ ostream& operator<<(ostream& os, const SLLString& s) {
     }
     Node *n = s.head;
     while(n) {
-        os << n->data << "->";
+        os << n->data;
         n = n->next;
     }
-    os << "NULL" << endl; // last one always points to NULL
+    
     return os;
 }
 
 void SLLString::destroy(){
-    while(head){
-        Node *n = head;
+    while(head) {
+        Node *prev = head;
         head = head->next;
-        delete n;
+        delete prev;
     }
 }
 
