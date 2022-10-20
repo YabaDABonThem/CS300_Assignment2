@@ -31,7 +31,6 @@ class SLLString {
     private:
         // other helper methods
         bool isPrefix(const Node *stringPtr, const SLLString& substring) const;
-        bool isEmpty() const;
         void destroy();
 
     friend class SLLStringTest;

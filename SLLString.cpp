@@ -92,6 +92,8 @@ char& SLLString::operator[](const int n) const {
 }
 
 int SLLString::findSubstring(const SLLString& substring) const {
+    // EDGE CASE: we are looking for an empty substring. Expects -1 as the result.
+    if (!substring.head) return -1;
     // return the index of the first occurence of the substring
     // this is a common sliding window problem
     int startMatch = 0; // index where they began matching
